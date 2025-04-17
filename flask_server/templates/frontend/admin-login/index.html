@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+   <meta charset="UTF-8">
+   <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+   <!--=============== REMIXICONS ===============-->
+   <link href="https://cdn.jsdelivr.net/npm/remixicon@2.5.0/fonts/remixicon.css" rel="stylesheet">
+
+   <!--=============== CSS ===============-->
+   <link rel="stylesheet" href="{{url_for('static',filename='css/styles2.css')}}">
+
+   <title>Admin Login</title>
+
+   <style>
+      /* Ensure the background covers the whole page */
+      body {
+         margin: 0;
+         padding: 0;
+         background-image: url("{{ url_for('static', filename='img/bg.jpeg') }}"); /* Use url_for for the static file */
+         background-size: cover;
+         background-position: center;
+         height: 100vh;
+         display: flex;
+         flex-direction: column;
+      }
+
+      /* Header container for logo and button */
+      .header {
+         position: fixed;
+         top: 0;
+         left: 0;
+         right: 0;
+         display: flex;
+         justify-content: space-between;
+         align-items: center;
+         padding: 1rem;
+         z-index: 10;
+         background-color: rgba(255, 255, 255, 0.7); /* Add a slight background to the header for visibility */
+      }
+
+      /* Logo styles */
+      .logo {
+         height: 50px; /* Adjust height as needed */
+         width: auto; /* Maintain aspect ratio */
+      }
+
+      /* Go to Home button styles */
+      .home-button {
+         background: linear-gradient(135deg, #007bff, #ff4d4d);
+         color: #fff;
+         padding: 0.5rem 1rem;
+         text-decoration: none;
+         border-radius: 0.5rem;
+         font-size: 1rem;
+         font-weight: bold;
+         transition: all 0.3s ease;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      }
+
+      .home-button:hover {
+         background: linear-gradient(135deg, #0056b3, #e60023);
+         transform: scale(1.05);
+         box-shadow: 0 6px 15px rgba(0, 0, 0, 0.3);
+      }
+
+      /* Login section styles */
+      .login {
+         margin-top: 4rem; /* Ensure space for the header */
+         width: 100%;
+         padding: 2rem;
+         box-sizing: border-box;
+         display: flex;
+         justify-content: center;
+         align-items: center;
+         flex-grow: 1; /* Allow the login form to grow */
+      }
+
+      .login__img {
+         display: none; /* Hide background image inside the login section */
+      }
+
+      /* Login form styling */
+      .login__form {
+         background-color: rgba(255, 255, 255, 0.9);
+         padding: 2rem;
+         border-radius: 0.5rem;
+         box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+         width: 100%;
+         max-width: 400px;
+      }
+
+      .login__title {
+         font-size: 2rem;
+         margin-bottom: 1.5rem;
+      }
+
+      /* Hide the icon by default and show it on focus */
+      .login__eye {
+         display: none;
+         position: absolute;
+         right: 10px;
+         top: 50%;
+         transform: translateY(-50%);
+         cursor: pointer;
+      }
+
+      .login__box-input {
+         position: relative;
+      }
+
+      /* Show the icon when the password input is focused */
+      .login__box-input input[type="password"]:focus + .login__eye {
+         display: inline-block;
+      }
+
+      /* Flash message styling */
+      .flash {
+         padding: 1rem;
+         margin-bottom: 1rem;
+         border-radius: 5px;
+         text-align: center;
+         font-weight: bold;
+      }
+      .flash.success {
+         background-color: #d4edda;
+         color: #155724;
+      }
+      .flash.danger {
+         background-color: #f8d7da;
+         color: #721c24;
+      }
+   </style>
+</head>
+<body>
+   <!-- Header Section -->
+   <div class="header">
+      <img src="{{url_for('static',filename='img/logo1.svg')}}" alt="Logo" class="logo" />
+      <a href="{{ url_for('hello_world') }}" class="home-button">Go to Home</a>
+   </div>
+
+   <!-- Flash Messages (success, error) -->
+   {% with messages = get_flashed_messages(with_categories=true) %}
+      {% if messages %}
+         {% for category, message in messages %}
+            <div class="flash {{ category }}">{{ message }}</div>
+         {% endfor %}
+      {% endif %}
+   {% endwith %}
+
+   <!-- Login Section -->
+   <div class="login">
+      <form action="{{ url_for('admin_login') }}" method="POST" class="login__form">
+         <h1 class="login__title">Admin Login</h1>
+      
+         <div class="login__content">
+            <div class="login__box">
+               <i class="ri-user-3-line login__icon"></i>
+               <div class="login__box-input">
+                  <input type="email" name="email" required class="login__input" id="login-email" placeholder=" ">
+                  <label for="login-email" class="login__label">Email</label>
+               </div>
+            </div>
+      
+            <div class="login__box">
+               <i class="ri-lock-2-line login__icon"></i>
+               <div class="login__box-input">
+                  <input type="password" name="password" required class="login__input" id="login-pass" placeholder=" ">
+                  <label for="login-pass" class="login__label">Password</label>
+               </div>
+            </div>
+         </div>
+      
+         <button type="submit" class="login__button">Login</button>
+      </form>
+   </div>
+   
+   <!--=============== MAIN JS ===============-->
+   <script src="{{url_for('static',filename='js/admin.js')}}"></script>
+
+   <!-- Client-side Validation (Optional) -->
+   <script>
+      document.querySelector('.login__form').addEventListener('submit', function (e) {
+         const email = document.getElementById('login-email').value.trim();
+         const password = document.getElementById('login-pass').value.trim();
+
+         if (!email || !password) {
+            e.preventDefault(); // stop form from submitting
+            alert("Both fields are required!");
+         }
+      });
+   </script>
+</body>
+</html>

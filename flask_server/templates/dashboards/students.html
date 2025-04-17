@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Students</title>
+    <style>
+      * {
+        box-sizing: border-box;
+        padding: 0;
+        margin: 0;
+      }
+      body {
+        padding: 2em;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+        font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, 'Open Sans', 'Helvetica Neue', sans-serif;
+      }
+      section {
+        padding: 2em;
+        width: 100%;
+      }
+      h1 {
+        color: #1979fa;
+      }
+      main {
+        display: flex;
+        gap: 48px;
+      }
+      .all {
+        max-height: 90vh;
+        overflow: auto;
+      }
+      .all ul {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 2em;
+      }
+      form {
+        display: flex;
+        flex-direction: column;
+        gap: 1em;
+        padding: 1em 0em;
+      }
+
+      a {
+        text-decoration: none;
+        color: inherit;
+      }
+      button {
+        background: #1979fa;
+        color: white;
+        padding: 0.5em;
+        border: none;
+        cursor: pointer;
+      }
+      input {
+        width: 100%;
+        padding: 0.5em;
+      }
+      li {
+        display: grid;
+        gap: 8px;
+      }
+      footer {
+        margin-top: auto;
+        color: rgb(205, 205, 205);
+      }
+    </style>
+  </head>
+  <body>
+    <h1>Update Students Page</h1>
+    <main>
+      <section class="all">
+        <h2>All Students :</h2>
+        <ul>
+          {% for student in students %}
+            <li>
+              <p>Name: {{ student.first_name }} {{ student.last_name }} (ID: {{ student.student_id }})</p>
+              <p>Gender: {{ student.gender }}</p>
+              <p>Date of Birth: {{ student.dob }}</p>
+              <p>Email: {{ student.email }}</p>
+              <p>Phone: {{ student.phone_number }}</p>
+              <p>Department: {{ student.department }}</p>
+              <p>Address: {{ student.address }}</p>
+              <p>Join Date: {{ student.join_date }}</p>
+              <button>
+                <a href="http://127.0.0.1:5000/students/update/{{ student.student_id }}">Update</a>
+              </button>
+            </li>
+          {% endfor %}
+        </ul>
+      </section>
+
+      <section>
+        <h2>Add Students Here</h2>
+        <form action="http://127.0.0.1:5000/students/" method="post">
+          <div>
+            <label for="student_id">Student ID</label>
+            <br />
+            <input type="number" name="student_id" placeholder="Student ID" value="{{ request.form['student_id'] }}" />
+          </div>
+
+          <div>
+            <label for="first_name">First Name</label>
+            <br />
+            <input type="text" name="first_name" placeholder="First Name" value="{{ request.form['first_name'] }}" required />
+          </div>
+
+          <div>
+            <label for="last_name">Last Name</label>
+            <br />
+            <input type="text" name="last_name" placeholder="Last Name" value="{{ request.form['last_name'] }}" required />
+          </div>
+
+          <div>
+            <label for="dob">Date of Birth</label>
+            <br />
+            <input type="date" name="dob" value="{{ request.form['dob'] }}" required />
+          </div>
+
+          <div>
+            <label for="gender">Gender</label>
+            <br />
+            <select name="gender" required>
+              <option value="Male" {% if request.form['gender'] == 'Male' %} selected {% endif %}>Male</option>
+              <option value="Female" {% if request.form['gender'] == 'Female' %} selected {% endif %}>Female</option>
+              <option value="Other" {% if request.form['gender'] == 'Other' %} selected {% endif %}>Other</option>
+            </select>
+          </div>
+
+          <div>
+            <label for="email">Email</label>
+            <br />
+            <input type="email" name="email" placeholder="Email" value="{{ request.form['email'] }}" required />
+          </div>
+
+          <div>
+            <label for="phone_number">Phone Number</label>
+            <br />
+            <input type="text" name="phone_number" placeholder="Phone Number" value="{{ request.form['phone_number'] }}" />
+          </div>
+
+          <div>
+            <label for="department">Department</label>
+            <br />
+            <select name="department_id" required>
+              {% for department in departments %}
+                <option value="{{ department.department_id }}" {% if request.form['department_id'] == department.department_id %} selected {% endif %}>{{ department.name }}</option>
+              {% endfor %}
+            </select>
+          </div>
+
+          <div>
+            <label for="address">Address</label>
+            <br />
+            <input type="text" name="address" placeholder="Address" value="{{ request.form['address'] }}" />
+          </div>
+
+          <div>
+            <label for="join_date">Join Date</label>
+            <br />
+            <input type="date" name="join_date" value="{{ request.form['join_date'] }}" required />
+          </div>
+
+          <button type="submit">Submit</button>
+        </form>
+      </section>
+    </main>
+  </body>
+</html>

@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Update Class Schedule</title>
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Update Class Schedule</h1>
+
+        <form method="POST">
+            <div class="form-group">
+                <label for="course_id">Course</label>
+                <select name="course_id" id="course_id" class="form-control">
+                    {% for course in courses %}
+                        <option value="{{ course.course_id }}" {% if course.course_id == schedule.course_id %} selected {% endif %}>
+                            {{ course.course_name }} ({{ course.course_code }})
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+            
+            <div class="form-group">
+                <label for="faculty_id">Faculty</label>
+                <select name="faculty_id" id="faculty_id" class="form-control">
+                    {% for faculty in faculty_members %}
+                        <option value="{{ faculty.faculty_id }}" {% if faculty.faculty_id == schedule.faculty_id %} selected {% endif %}>
+                            {{ faculty.first_name }} {{ faculty.last_name }}
+                        </option>
+                    {% endfor %}
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="day_of_week">Day of Week</label>
+                <select name="day_of_week" id="day_of_week" class="form-control">
+                    <option value="Monday" {% if schedule.day_of_week == 'Monday' %} selected {% endif %}>Monday</option>
+                    <option value="Tuesday" {% if schedule.day_of_week == 'Tuesday' %} selected {% endif %}>Tuesday</option>
+                    <option value="Wednesday" {% if schedule.day_of_week == 'Wednesday' %} selected {% endif %}>Wednesday</option>
+                    <option value="Thursday" {% if schedule.day_of_week == 'Thursday' %} selected {% endif %}>Thursday</option>
+                    <option value="Friday" {% if schedule.day_of_week == 'Friday' %} selected {% endif %}>Friday</option>
+                    <option value="Saturday" {% if schedule.day_of_week == 'Saturday' %} selected {% endif %}>Saturday</option>
+                </select>
+            </div>
+
+            <div class="form-group">
+                <label for="start_time">Start Time</label>
+                <input type="time" name="start_time" id="start_time" class="form-control" value="{{ schedule.start_time }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="end_time">End Time</label>
+                <input type="time" name="end_time" id="end_time" class="form-control" value="{{ schedule.end_time }}" required>
+            </div>
+
+            <div class="form-group">
+                <label for="room_number">Room Number</label>
+                <input type="text" name="room_number" id="room_number" class="form-control" value="{{ schedule.room_number }}">
+            </div>
+
+            <button type="submit" class="btn btn-primary">Update Schedule</button>
+        </form>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+</body>
+</html>

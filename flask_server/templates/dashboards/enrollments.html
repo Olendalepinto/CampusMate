@@ -1,0 +1,62 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Enrollments</title>
+</head>
+<body>
+  <h1>Enrollments</h1>
+  
+  <h2>Add Enrollment</h2>
+  <form action="{{ url_for('enrollments') }}" method="post">
+    <label for="student_id">Student:</label>
+    <select name="student_id" required>
+      {% for student in students %}
+      <option value="{{ student.student_id }}">{{ student.first_name }} {{ student.last_name }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="course_id">Course:</label>
+    <select name="course_id" required>
+      {% for course in courses %}
+      <option value="{{ course.course_id }}">{{ course.course_name }}</option>
+      {% endfor %}
+    </select>
+
+    <label for="semester">Semester:</label>
+    <input type="number" name="semester" min="1" max="8" required>
+
+    <label for="grade">Grade:</label>
+    <input type="number" name="grade" min="0" max="10" step="0.1">
+
+    <label for="total_classes">Total Classes:</label>
+    <input type="number" name="total_classes" min="0" required>
+
+    <label for="classes_attended">Classes Attended:</label>
+    <input type="number" name="classes_attended" min="0" required>
+
+    <label for="faculty_id">Faculty:</label>
+    <select name="faculty_id" required>
+      {% for faculty in faculties %}
+      <option value="{{ faculty.faculty_id }}">{{ faculty.first_name }} {{ faculty.last_name }}</option>
+      {% endfor %}
+    </select>
+
+    <button type="submit">Add Enrollment</button>
+  </form>
+
+  <h2>All Enrollments</h2>
+  <ul>
+    {% for enrollment in enrollments %}
+    <li>
+      {{ enrollment.student.first_name }} {{ enrollment.student.last_name }} - {{ enrollment.course.course_name }}
+      (Semester: {{ enrollment.semester }}, Grade: {{ enrollment.grade or 'N/A' }}, 
+      Total Classes: {{ enrollment.total_classes or 'N/A' }}, 
+      Classes Attended: {{ enrollment.classes_attended or 'N/A' }},
+      Faculty: {{ enrollment.faculty.first_name }} {{ enrollment.faculty.last_name }})
+      <a href="{{ url_for('enrollments_update', id=enrollment.enrollment_id) }}">Update</a>
+      <a href="{{ url_for('enrollments_delete', id=enrollment.enrollment_id) }}">Delete</a>
+    </li>
+    {% endfor %}
+  </ul>
+</body>
+</html>

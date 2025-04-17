@@ -1,0 +1,209 @@
+{
+  "intents": [
+    {
+      "tag": "greeting",
+      "patterns": [
+        "Hi",
+        "Hey",
+        "How are you",
+        "Is anyone there?",
+        "Hello",
+        "Good day"
+      ],
+      "responses": [
+        "Hey :-)",
+        "Hello, thanks for visiting",
+        "Hi there, what can I do for you?",
+        "Hi there, how can I help?"
+      ]
+    },
+    {
+      "tag": "goodbye",
+      "patterns": ["Bye", "See you later", "Goodbye"],
+      "responses": [
+        "See you later, thanks for visiting",
+        "Have a nice day",
+        "Bye! Come back again soon."
+      ]
+    },
+    {
+      "tag": "thanks",
+      "patterns": [
+        "Thanks",
+        "Thank you",
+        "That's helpful",
+        "Thank's a lot!",
+        "Okay"
+      ],
+      "responses": ["Happy to help!", "Any time!", "My pleasure"]
+    },
+    {
+      "tag": "admin",
+      "patterns": [
+        "Do you know the admins?",
+        "Who are the admins?",
+        "Can you tell more about the admins?",
+        "Tell me about the admins",
+        "More info on admins",
+        "What are the admin details?",
+        "Tell more about the admin team",
+        "Narula admins",
+        "Who is the registrar and admin officers?"
+      ],
+      "responses": [
+        "Our Registrar is Dr. Supriyo Bhattacharya. \n The Admin team includes Subrata Das, Dipankar Chatterjee, and Kalyan Mukherjee."
+      ]
+    },
+          {
+              "tag": "faculty_list",
+              "patterns": [
+                  "Show me the faculty list",
+                  "Who are the faculty members?",
+                  "List all faculty",
+                  "Faculty directory"
+              ],
+              "responses": [
+                  "Here is the list of all faculty members.",
+                  "Let me fetch the faculty directory for you.",
+                  "Sure, here is the faculty list."
+              ]
+          },
+          {
+            "tag": "faculty_details",
+            "patterns": [
+                "Tell me about the faculty member",
+                "Can you provide details of the professor?",
+                "Give me information about the faculty"
+            ],
+            "responses": [
+                "Please provide the name of the faculty member.",
+                "I need the faculty name to fetch the details.",
+                "Kindly share the name of the faculty you want details for."
+            ]
+        },
+         
+  {
+    "tag": "find_sgpa",
+    "patterns": [
+        "What is my SGPA for semester?",
+        "Calculate SGPA for semester",
+        "Show my SGPA for this semester",
+        "What is the SGPA for semester?",
+        "Find my SGPA for semester"
+    ],
+    "responses": [
+        "Please provide both student ID and semester in the format: 'student_id,semester'"
+    ]
+},
+{
+  "tag": "courses",
+  "patterns": [
+    "Which courses are offered here?",
+    "Tell me more about BCA.",
+    "More info on BTECH please.",
+    "What is MTECH?",
+    "What is BCA?",
+    "When does BTECH get completed?",
+    "How long does MCA take?",
+    "Which courses are best here?",
+    "What about the fees structure?",
+    "Are there any medical courses?",
+    "How long does it take to complete these courses?"
+  ],
+  "responses": [
+    "We offer courses like BCA, BTECH, MCA, and MTECH. Each course has specific durations, such as BTECH and BCA taking 4 years, and MCA or MTECH taking 2 years.",
+    "For more details on a specific course, please ask about its name."
+  ]
+},
+{
+  "tag": "departments",
+  "patterns": [
+    "Which departments are available?",
+    "Tell me about the departments in this college.",
+    "Who is the head of the CSE department?",
+    "What is the role of the IT department?",
+    "How many departments are there?",
+    "Which department offers AI-related courses?"
+  ],
+  "responses": [
+    "We have departments like Computer Science, Information Technology, Electronics, and Mechanical Engineering. Each department is headed by a qualified expert.",
+    "For more specific information, please mention the department name."
+  ]
+},
+{
+  "tag": "students",
+  "patterns": [
+    "How many students are enrolled here?",
+    "Can you give information about student facilities?",
+    "Tell me about the achievements of students.",
+    "How do I contact student representatives?",
+    "Are there any student clubs or organizations?"
+  ],
+  "responses": [
+    "We have a vibrant student community with various clubs and organizations. For specific queries, mention the topic, such as 'student achievements' or 'student facilities.'"
+  ]
+},
+{
+  "tag": "enrollment",
+  "patterns": [
+    "How do I enroll in a course?",
+    "What is the enrollment process?",
+    "When is the enrollment deadline?",
+    "Can I enroll in multiple courses?",
+    "How do I check my enrollment status?"
+  ],
+  "responses": [
+    "The enrollment process involves filling out an online form and submitting the required documents. Deadlines and further instructions depend on the course."
+  ]
+},
+
+{
+  "tag": "attendance",
+  "patterns": [
+    "How do I check my attendance?",
+    "What is the minimum attendance required?",
+    "Can I see my attendance record?",
+    "Who updates the attendance?",
+    "Is attendance mandatory for all classes?"
+  ],
+  "responses": [
+    "Attendance can be checked on the student portal. The minimum required is 75%, and faculty update the attendance regularly."
+  ]
+},
+{
+  "tag": "results",
+  "patterns": [
+   
+  ],
+  "responses": [
+    "Results are published on the student portal. You can check grades for all semesters by logging in with your credentials."
+  ]
+},
+{
+  "tag": "find_cgpa",
+  "patterns": [
+    "What is my CGPA?",
+    "Show my CGPA",
+    "Can you calculate my CGPA?",
+    "Find my overall CGPA",
+    "Tell me my CGPA"
+  ],
+  "responses": [
+    "Please provide your student ID to fetch your CGPA."
+  ]
+},
+{
+  "tag": "find_attendance",
+  "patterns": [
+    "What is my attendance?",
+    "Show my attendance",
+    "Can you check my attendance?",
+    "Get my attendance details",
+    "Find my attendance record"
+  ],
+  "responses": [
+    "Please provide both student ID and course ID in the format: 'student_id,course_id'"
+  ]
+}
+]
+}

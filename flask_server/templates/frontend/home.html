@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>College Enquiry Chatbot</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='css/styles1.css') }}" />
+    
+    <!-- Icon Library (e.g., Remix Icons) -->
+    <link href="https://cdn.jsdelivr.net/npm/remixicon@3.2.0/fonts/remixicon.css" rel="stylesheet" />
+  </head>
+
+  <body>
+    <div class="chatbot-section">
+      <figure class="mobile">
+        <div class="app">
+          <!-- Header -->
+          <div class="header">
+            <img class="avatar" src="{{ url_for('static', filename='dp.png') }}" alt="Chatbot" />
+            <div>
+              <p>CampusMATE</p>
+              <span>Online</span>
+            </div>
+          </div>
+
+          <!-- Chat section -->
+          <div class="chat-messages">
+            <div class="chat-message incoming-message">👋 Hello, I am College Enquiry Bot</div>
+            <div class="chat-message incoming-message">
+              Ask me anything related to:
+              <ol>
+                <li>Semester wise result 📜📚</li>
+                <li>Faculty 🧑‍🏫👩‍🏫</li>
+                <li>Holidays 🥳</li>
+                <li>Joke 😃</li>
+                <li>etc...</li>
+              </ol>
+            </div>
+          </div>
+
+          <!-- Chat input section -->
+          <div class="chat-input-section">
+            <form id="chat-form">
+              <input id="chat-input" type="text" aria-label="chat-input" placeholder="Type a message ..." />
+              <button class="svg-btn" type="submit" aria-label="send-message-btn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  class="chat-input-svg"
+                  fill="none"
+                  viewBox="0 0 24 24"
+                  stroke="white"
+                >
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+                </svg>
+              </button>
+            </form>
+          </div>
+        </div>
+      </figure>
+    </div>
+
+    <!-- Floating chatbot icon that redirects to index -->
+    <a href="{{ url_for('hello_world') }}" class="chatbot-icon">
+      <i class="ri-chat-1-line chatbot-icon__icon"></i>
+  </a>
+
+    <footer>This site is coded by Nithish, Olen, Rachana, Rajat</footer>
+
+    <!-- JS Files -->
+    <script src="{{ url_for('static', filename='js/scrollreveal.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/main.js') }}"></script>
+    <script src="{{ url_for('static', filename='chat.js') }}"></script>
+
+    <script>
+      document.querySelector('.mobile').classList.remove('hidden');
+    </script>
+  </body>
+</html>

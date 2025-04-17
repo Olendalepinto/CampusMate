@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Faculty Dashboard</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 30px; }
+        h1 { color: #2c3e50; }
+        table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 8px; }
+        form { display: inline-block; margin-top: 20px; }
+
+        /* Ensuring dropdowns are visible and styled properly */
+        select, option {
+            padding: 8px;
+            font-size: 14px;
+            margin: 10px 0;
+            border: 1px solid #ccc;
+            width: 200px;
+            border-radius: 4px;
+        }
+
+        button {
+            padding: 8px 16px;
+            background-color: #3498db;
+            color: white;
+            border: none;
+            border-radius: 4px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #2980b9;
+        }
+
+        table {
+            width: 100%;
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Welcome, {{ faculty.first_name }} {{ faculty.last_name }}</h1>
+    <p><strong>Email:</strong> {{ faculty.email }}</p>
+    <p><strong>Faculty ID:</strong> {{ faculty.faculty_id }}</p>
+    <p><strong>Department:</strong> {{ faculty.department.department_name }}</p>
+
+    <h2>Select Course & Semester</h2>
+    <form method="POST">
+        <label for="course_id">Course:</label>
+        <select name="course_id" id="course_id" required>
+            <option value="">-- Select --</option>
+            {% for course in courses %}
+                <option value="{{ course.course_id }}"
+                    {% if selected_course_id|string == course.course_id|string %}selected{% endif %}>
+                    {{ course.course_name }} ({{ course.course_code }})
+                </option>
+            {% endfor %}
+        </select>
+
+        <label for="semester">Semester:</label>
+        <select name="semester" id="semester" required>
+            <option value="">-- Select --</option>
+            {% for s in range(1, 9) %}
+                <option value="{{ s }}"
+                    {% if selected_semester|string == s|string %}selected{% endif %}>Semester {{ s }}</option>
+            {% endfor %}
+        </select>
+
+        <button type="submit">View Students</button>
+    </form>
+
+    {% if enrollments %}
+        <h2>Enrolled Students</h2>
+        <table>
+            <tr>
+                <th>Course Name</th>
+                <th>Course Code</th>
+                <th>Student Name</th>
+                <th>Email</th>
+                <th>Grade</th>
+                <th>Total Classes</th>
+                <th>Classes Attended</th>
+                <th>Action</th>
+            </tr>
+            {% for enrollment in enrollments %}
+                <form method="POST" action="{{ url_for('faculty_dashboard') }}">
+                    <tr>
+                        <td>{{ enrollment.course.course_name }}</td>
+                        <td>{{ enrollment.course.course_code }}</td>
+                        <td>{{ enrollment.student.first_name }} {{ enrollment.student.last_name }}</td>
+                        <td>{{ enrollment.student.email }}</td>
+                        <td><input type="number" name="grade" step="0.01" value="{{ enrollment.grade or '' }}"></td>
+                        <td><input type="number" name="total_classes" value="{{ enrollment.total_classes or '' }}"></td>
+                        <td><input type="number" name="classes_attended" value="{{ enrollment.classes_attended or '' }}"></td>
+                        <td>
+                            <input type="hidden" name="form_type" value="update_enrollment">
+                            <input type="hidden" name="enrollment_id" value="{{ enrollment.enrollment_id }}">
+                            <button type="submit">Update</button>
+                        </td>
+                    </tr>
+                </form>
+            {% endfor %}
+        </table>
+    {% elif selected_course_id and selected_semester %}
+        <p>No enrollments found for this course and semester.</p>
+    {% endif %}
+</body>
+</html>

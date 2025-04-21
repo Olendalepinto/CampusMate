@@ -2,107 +2,574 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>Faculty Dashboard</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CampusMate | Faculty Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        body { font-family: Arial, sans-serif; margin: 30px; }
-        h1 { color: #2c3e50; }
-        table, th, td { border: 1px solid #ccc; border-collapse: collapse; padding: 8px; }
-        form { display: inline-block; margin-top: 20px; }
-
-        /* Ensuring dropdowns are visible and styled properly */
-        select, option {
-            padding: 8px;
-            font-size: 14px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            width: 200px;
-            border-radius: 4px;
+        :root {
+            --primary: #4361ee;
+            --primary-dark: #3a56d4;
+            --secondary: #3f37c9;
+            --success: #4cc9f0;
+            --danger: #ef476f;
+            --warning: #ffd166;
+            --info: #8338ec;
+            --light: #f8f9fa;
+            --dark: #212529;
+            --gray: #6c757d;
+            --light-gray: #e9ecef;
+            --border-radius: 8px;
+            --box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
         }
 
-        button {
-            padding: 8px 16px;
-            background-color: #3498db;
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+            position: relative;
+            min-height: 100vh;
+            padding-bottom: 80px; /* Space for the logout button */
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: white;
+            box-shadow: var(--box-shadow);
+            padding: 15px 0;
+            position: sticky;
+            top: 0;
+            z-index: 100;
+        }
+
+        .navbar-content {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+        }
+
+        .logo img {
+            height: 60px; /* Increased from 40px to 60px */
+            width: auto;
+        }
+
+        .user-info {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            background-color: var(--primary);
             color: white;
-            border: none;
-            border-radius: 4px;
-            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: bold;
         }
 
-        button:hover {
-            background-color: #2980b9;
+        /* Main Content */
+        .main-content {
+            padding: 30px 0;
+        }
+
+        .card {
+            background-color: white;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            padding: 25px;
+            margin-bottom: 30px;
+        }
+
+        .faculty-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-start;
+            margin-bottom: 25px;
+        }
+
+        .faculty-details h1 {
+            color: var(--dark);
+            font-size: 24px;
+            margin-bottom: 10px;
+        }
+
+        .faculty-info {
+            display: flex;
+            gap: 30px;
+            color: var(--gray);
+            font-size: 15px;
+        }
+
+        .faculty-info div {
+            display: flex;
+            align-items: center;
+        }
+
+        .faculty-info i {
+            margin-right: 6px;
+            color: var(--primary);
+        }
+
+        /* Course Selection Form */
+        .form-card {
+            background: linear-gradient(to right, #4361ee, #3a56d4);
+            color: white;
+            padding: 25px;
+        }
+
+        .card-title {
+            font-size: 18px;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+        }
+
+        .card-title i {
+            margin-right: 10px;
+        }
+
+        .form-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 20px;
+            align-items: flex-end;
+        }
+
+        .input-group {
+            flex: 1;
+            min-width: 200px;
+        }
+
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 500;
+            font-size: 14px;
+        }
+
+        select {
+            width: 100%;
+            padding: 12px 15px;
+            border-radius: var(--border-radius);
+            border: none;
+            background-color: rgba(255, 255, 255, 0.15);
+            color: white;
+            font-size: 16px;
+            transition: background-color 0.3s;
+            appearance: none;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 16px;
+        }
+
+        select:focus {
+            background-color: rgba(255, 255, 255, 0.25);
+            outline: none;
+        }
+
+        select option {
+            background-color: var(--primary);
+            color: white;
+        }
+
+        .btn {
+            padding: 12px 24px;
+            background-color: white;
+            color: var(--primary);
+            border: none;
+            border-radius: var(--border-radius);
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 16px;
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .btn i {
+            margin-right: 8px;
+        }
+
+        .btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+
+        /* Student Table */
+        .table-responsive {
+            overflow-x: auto;
         }
 
         table {
             width: 100%;
-            margin-top: 30px;
+            border-collapse: collapse;
+            margin-top: 20px;
+            font-size: 15px;
+        }
+
+        th, td {
+            padding: 15px;
+            text-align: left;
+            border-bottom: 1px solid var(--light-gray);
+        }
+
+        th {
+            background-color: #f8f9fa;
+            font-weight: 600;
+            color: var(--dark);
+        }
+
+        tr:hover {
+            background-color: #f5f7fa;
+        }
+
+        /* Form inputs in table */
+        table input[type="number"] {
+            width: 80px;
+            padding: 8px 12px;
+            border: 1px solid var(--light-gray);
+            border-radius: 4px;
+            font-size: 14px;
+            transition: border-color 0.3s;
+        }
+
+        table input[type="number"]:focus {
+            border-color: var(--primary);
+            outline: none;
+        }
+
+        /* Update button in table */
+        .btn-update {
+            background-color: var(--primary);
+            color: white;
+            padding: 8px 15px;
+            font-size: 14px;
+        }
+
+        /* Empty state */
+        .empty-state {
+            text-align: center;
+            padding: 40px 0;
+            color: var(--gray);
+        }
+
+        .empty-state i {
+            font-size: 60px;
+            color: var(--light-gray);
+            margin-bottom: 20px;
+        }
+
+        /* Responsive adjustments */
+        @media (max-width: 768px) {
+            .faculty-header {
+                flex-direction: column;
+                gap: 20px;
+            }
+            
+            .faculty-info {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .form-group {
+                flex-direction: column;
+                gap: 15px;
+            }
+            
+            .input-group {
+                width: 100%;
+            }
+            
+            table {
+                font-size: 14px;
+            }
+            
+            th, td {
+                padding: 12px 10px;
+            }
+            
+            .logout-container {
+                left: 20px;
+            }
+        }
+
+        /* Status indicators */
+        .attendance-status {
+            display: flex;
+            align-items: center;
+            gap: 5px;
+        }
+
+        .attendance-dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+        }
+
+        .good {
+            background-color: #2ecc71;
+        }
+
+        .warning {
+            background-color: #f39c12;
+        }
+
+        .poor {
+            background-color: #e74c3c;
+        }
+        
+        /* Logout Button */
+        .logout-container {
+            position: fixed;
+            bottom: 20px;
+            left: 40px;
+            z-index: 90;
+        }
+        
+        .btn-logout {
+            background-color: var(--danger);
+            color: white;
+            padding: 12px 24px;
+            border-radius: var(--border-radius);
+            box-shadow: var(--box-shadow);
+            font-weight: 600;
+            transition: all 0.3s;
+        }
+        
+        .btn-logout:hover {
+            transform: translateY(-2px);
+            background-color: #d64161;
+            box-shadow: 0 5px 15px rgba(239, 71, 111, 0.3);
         }
     </style>
 </head>
 <body>
-    <h1>Welcome, {{ faculty.first_name }} {{ faculty.last_name }}</h1>
-    <p><strong>Email:</strong> {{ faculty.email }}</p>
-    <p><strong>Faculty ID:</strong> {{ faculty.faculty_id }}</p>
-    <p><strong>Department:</strong> {{ faculty.department.department_name }}</p>
+    <!-- Navbar -->
+    <div class="navbar">
+        <div class="container navbar-content">
+            <div class="logo">
+                <img src="{{ url_for('static', filename='img/logo1.svg') }}" alt="CampusMate Logo">
+                <!-- Removed the CampusMate text span -->
+            </div>
+            <div class="user-info">
+                <span>{{ faculty.first_name }} {{ faculty.last_name }}</span>
+                <div class="avatar">
+                    {{ faculty.first_name[0] }}{{ faculty.last_name[0] }}
+                </div>
+            </div>
+        </div>
+    </div>
 
-    <h2>Select Course & Semester</h2>
-    <form method="POST">
-        <label for="course_id">Course:</label>
-        <select name="course_id" id="course_id" required>
-            <option value="">-- Select --</option>
-            {% for course in courses %}
-                <option value="{{ course.course_id }}"
-                    {% if selected_course_id|string == course.course_id|string %}selected{% endif %}>
-                    {{ course.course_name }} ({{ course.course_code }})
-                </option>
-            {% endfor %}
-        </select>
+    <!-- Main Content -->
+    <div class="container main-content">
+        <!-- Faculty Info Card -->
+        <div class="card">
+            <div class="faculty-header">
+                <div class="faculty-details">
+                    <h1>Faculty Dashboard</h1>
+                    <div class="faculty-info">
+                        <div>
+                            <i class="fas fa-id-badge"></i>
+                            <span>ID: {{ faculty.faculty_id }}</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-envelope"></i>
+                            <span>{{ faculty.email }}</span>
+                        </div>
+                        <div>
+                            <i class="fas fa-building"></i>
+                            <span>{{ faculty.department.department_name }}</span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
 
-        <label for="semester">Semester:</label>
-        <select name="semester" id="semester" required>
-            <option value="">-- Select --</option>
-            {% for s in range(1, 9) %}
-                <option value="{{ s }}"
-                    {% if selected_semester|string == s|string %}selected{% endif %}>Semester {{ s }}</option>
-            {% endfor %}
-        </select>
+        <!-- Course Selection Card -->
+        <div class="card form-card">
+            <h2 class="card-title">
+                <i class="fas fa-book"></i> Select Course & Semester
+            </h2>
+            <form method="POST">
+                <div class="form-group">
+                    <div class="input-group">
+                        <label for="course_id">Course</label>
+                        <select name="course_id" id="course_id" required>
+                            <option value="">-- Select Course --</option>
+                            {% for course in courses %}
+                                <option value="{{ course.course_id }}"
+                                    {% if selected_course_id|string == course.course_id|string %}selected{% endif %}>
+                                    {{ course.course_name }} ({{ course.course_code }})
+                                </option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div class="input-group">
+                        <label for="semester">Semester</label>
+                        <select name="semester" id="semester" required>
+                            <option value="">-- Select Semester --</option>
+                            {% for s in range(1, 9) %}
+                                <option value="{{ s }}"
+                                    {% if selected_semester|string == s|string %}selected{% endif %}>Semester {{ s }}</option>
+                            {% endfor %}
+                        </select>
+                    </div>
+                    <div>
+                        <button type="submit" class="btn">
+                            <i class="fas fa-search"></i> View Students
+                        </button>
+                    </div>
+                </div>
+            </form>
+        </div>
 
-        <button type="submit">View Students</button>
-    </form>
+        <!-- Student Enrollments Card -->
+        <div class="card">
+            <h2 class="card-title">
+                <i class="fas fa-users"></i> Enrolled Students
+            </h2>
+            
+            {% if enrollments %}
+                <div class="table-responsive">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Student Name</th>
+                                <th>Email</th>
+                                <th>Course</th>
+                                <th>Grade</th>
+                                <th>Attendance</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            {% for enrollment in enrollments %}
+                                <form method="POST" action="{{ url_for('faculty_dashboard') }}">
+                                    <tr>
+                                        <td>{{ enrollment.student.first_name }} {{ enrollment.student.last_name }}</td>
+                                        <td>{{ enrollment.student.email }}</td>
+                                        <td>{{ enrollment.course.course_code }}</td>
+                                        <td>
+                                            <input type="number" name="grade" step="0.01" min="0" max="100" value="{{ enrollment.grade or '' }}">
+                                        </td>
+                                        <td>
+                                            <div style="display:flex; gap:10px; align-items:center;">
+                                                <div>
+                                                    <input type="number" name="classes_attended" value="{{ enrollment.classes_attended or '' }}" min="0"> / 
+                                                    <input type="number" name="total_classes" value="{{ enrollment.total_classes or '' }}" min="0">
+                                                </div>
+                                                
+                                                {% if enrollment.classes_attended and enrollment.total_classes %}
+                                                    {% set attendance_rate = (enrollment.classes_attended / enrollment.total_classes) * 100 %}
+                                                    <div class="attendance-status">
+                                                        <div class="attendance-dot {{ 'good' if attendance_rate >= 75 else 'warning' if attendance_rate >= 60 else 'poor' }}"></div>
+                                                        <span>{{ "%.1f"|format(attendance_rate) }}%</span>
+                                                    </div>
+                                                {% endif %}
+                                            </div>
+                                        </td>
+                                        <td>
+                                            <input type="hidden" name="form_type" value="update_enrollment">
+                                            <input type="hidden" name="enrollment_id" value="{{ enrollment.enrollment_id }}">
+                                            <button type="submit" class="btn btn-update">
+                                                <i class="fas fa-save"></i> Update
+                                            </button>
+                                        </td>
+                                    </tr>
+                                </form>
+                            {% endfor %}
+                        </tbody>
+                    </table>
+                </div>
+            {% elif selected_course_id and selected_semester %}
+                <div class="empty-state">
+                    <i class="fas fa-user-slash"></i>
+                    <h3>No Students Found</h3>
+                    <p>There are no enrollments for this course and semester.</p>
+                </div>
+            {% else %}
+                <div class="empty-state">
+                    <i class="fas fa-chalkboard-teacher"></i>
+                    <h3>Welcome to your Dashboard</h3>
+                    <p>Please select a course and semester to view enrolled students.</p>
+                </div>
+            {% endif %}
+        </div>
+    </div>
+    
+    <!-- Logout Button -->
+    <div class="logout-container">
+        <a href="{{ url_for('faculty_logout') }}" class="btn btn-logout">
+            <i class="fas fa-sign-out-alt"></i> Logout
+        </a>
+    </div>
 
-    {% if enrollments %}
-        <h2>Enrolled Students</h2>
-        <table>
-            <tr>
-                <th>Course Name</th>
-                <th>Course Code</th>
-                <th>Student Name</th>
-                <th>Email</th>
-                <th>Grade</th>
-                <th>Total Classes</th>
-                <th>Classes Attended</th>
-                <th>Action</th>
-            </tr>
-            {% for enrollment in enrollments %}
-                <form method="POST" action="{{ url_for('faculty_dashboard') }}">
-                    <tr>
-                        <td>{{ enrollment.course.course_name }}</td>
-                        <td>{{ enrollment.course.course_code }}</td>
-                        <td>{{ enrollment.student.first_name }} {{ enrollment.student.last_name }}</td>
-                        <td>{{ enrollment.student.email }}</td>
-                        <td><input type="number" name="grade" step="0.01" value="{{ enrollment.grade or '' }}"></td>
-                        <td><input type="number" name="total_classes" value="{{ enrollment.total_classes or '' }}"></td>
-                        <td><input type="number" name="classes_attended" value="{{ enrollment.classes_attended or '' }}"></td>
-                        <td>
-                            <input type="hidden" name="form_type" value="update_enrollment">
-                            <input type="hidden" name="enrollment_id" value="{{ enrollment.enrollment_id }}">
-                            <button type="submit">Update</button>
-                        </td>
-                    </tr>
-                </form>
-            {% endfor %}
-        </table>
-    {% elif selected_course_id and selected_semester %}
-        <p>No enrollments found for this course and semester.</p>
-    {% endif %}
+    <!-- Small script to calculate attendance percentages dynamically -->
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const attendedInputs = document.querySelectorAll('input[name="classes_attended"]');
+            const totalInputs = document.querySelectorAll('input[name="total_classes"]');
+            
+            function updateAttendanceStatus(attendedInput, totalInput) {
+                const attended = parseInt(attendedInput.value) || 0;
+                const total = parseInt(totalInput.value) || 0;
+                
+                if (attended && total) {
+                    const rate = (attended / total) * 100;
+                    const statusContainer = attendedInput.closest('div').parentElement.querySelector('.attendance-status');
+                    
+                    if (statusContainer) {
+                        const dot = statusContainer.querySelector('.attendance-dot');
+                        const percentage = statusContainer.querySelector('span');
+                        
+                        if (rate >= 75) {
+                            dot.className = 'attendance-dot good';
+                        } else if (rate >= 60) {
+                            dot.className = 'attendance-dot warning';
+                        } else {
+                            dot.className = 'attendance-dot poor';
+                        }
+                        
+                        percentage.textContent = rate.toFixed(1) + '%';
+                    }
+                }
+            }
+            
+            attendedInputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    updateAttendanceStatus(input, totalInputs[index]);
+                });
+            });
+            
+            totalInputs.forEach((input, index) => {
+                input.addEventListener('input', () => {
+                    updateAttendanceStatus(attendedInputs[index], input);
+                });
+            });
+        });
+    </script>
 </body>
 </html>

@@ -774,7 +774,7 @@ def faculty_login():
         else:
             flash('Invalid credentials. Please try again.', 'danger')
 
-    return render_template('login.html')
+    return render_template('frontend/index.html')
 
 @app.route('/faculty/logout')
 def faculty_logout():

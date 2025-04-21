@@ -18,6 +18,7 @@ in VS Code, run `Ctrl+Shift+P` ,s earch for _Create environment_ & create one. *
 2. `pip install nltk spacy flask flask_sqlalchemy`
 3. `python -m spacy download en_core_web_sm`
 4. `pip install thinc wheel`
+5. 'pip install python-telegram-bot requests'
 
 ## Running the flask Server
 
